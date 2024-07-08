@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>MY APP</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <div class="background-blur"></div>
+    <div class="panel">
+        <h1>May Node and Express be with you.</h1>
+        <form action="/quotes" method="POST">
+            <input type="text" placeholder="name" name="name" />
+            <input type="text" placeholder="quote" name="quote" />
+            <button type="submit">Submit</button>
+        </form>
+        <ul>
+            <% quotes.forEach(quote => { %>
+                <li class="quote">
+                    <span><%= quote.name %></span>
+                    <span><%= quote.quote %></span>
+                    <!-- <button class="delete-button" data-id="<%= quote._id %>">Delete</button> -->
+                </li>
+            <% }) %>
+        </ul>
+        <div>
+            <h2>Darth Vader invades!</h2>
+            <p>Replace first Yoda's quote with a quote written by Darth Vader</p>
+            <button id="update-button">Replace Yoda's quote</button>
+        </div>
+        <div>
+            <h2>Remove Darth Vader!</h2>
+            <p>Delete one Darth Vader's quote. Does nothing if there are no more Darth Vader's quote</p>
+            <button id="delete-vader-button">Delete Darth Vader's quote</button>
+        </div>
+        <div>
+            <h2>Delete All Quotes</h2>
+            <button id="delete-all-button">Delete All Quotes</button>
+        </div>
+    </div>
+    <script src="/main.js"></script>
+</body>
+</html>
