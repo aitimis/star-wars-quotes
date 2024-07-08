@@ -2,8 +2,11 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const { MongoClient, ServerApiVersion } = require('mongodb');
 
+const dotenv = require('dotenv');
+dotenv.config();
+
 const app = express();
-const uri = "mongodb+srv://aitimis:Angular!2345.@cluster0.qzzyqmo.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+const uri = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.qzzyqmo.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
@@ -28,7 +31,6 @@ MongoClient.connect(uri, {
 
     // Read all quotes
     app.get('/', (req, res) => {
-        // res.sendFile(__dirname + '/index.html');
         quotesCollection.find().toArray()
         .then(result => {
             res.render('index.ejs', { quotes: result });
