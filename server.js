@@ -65,29 +65,28 @@ MongoClient.connect(uri, {
         .catch(error => console.error(error));
     });
 
-    // Delete a specific quote
-    app.delete('/quotes', (req, res) => {
-        quotesCollection
-            .deleteOne(/* ... */)
-            .then(result => {
-            if (result.deletedCount === 0) {
-                return res.json('No quote to delete')
-            }
-            res.json(`Deleted Darth Vader's quote`)
-            })
-            .catch(error => console.error(error))
-        })
+        // Route to delete "Darth Vader" quotes
+        app.delete('/quotes/darth-vader', (req, res) => {
+            quotesCollection.deleteMany({ name: 'Darth Vader' })
+                .then(result => {
+                    if (result.deletedCount === 0) {
+                        return res.json('No quote to delete');
+                    }
+                    res.json(`Deleted ${result.deletedCount} Darth Vader quotes`);
+                })
+                .catch(error => console.error(error));
+        });
 
-    // Delete all quotes
-    app.delete('/quotes', (req, res) => {
-        quotesCollection.deleteMany({})
-            .then(result => {
-                console.log(`Deleted ${result.deletedCount} items`);
-                res.json(`Deleted ${result.deletedCount} items`); // Send a response back to the client
-            })
-            .catch(error => console.error(error));
-    });
-
+        // Route to delete all quotes
+        app.delete('/quotes', (req, res) => {
+            console.log('Received request to delete all quotes');
+            quotesCollection.deleteMany({})
+                .then(result => {
+                    console.log(`Deleted ${result.deletedCount} items`);
+                    res.json(`Deleted ${result.deletedCount} items`); // Send a response back to the client
+                })
+                .catch(error => console.error(error));
+        });
 
     // start the server
     app.listen(3000, () => {

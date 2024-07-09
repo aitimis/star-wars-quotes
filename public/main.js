@@ -16,40 +16,45 @@ updateButton.addEventListener('click', _ => {
     .catch(error => console.error('Error:', error));
 });
 
-const deleteVaderButton = document.querySelector('#delete-vader-button')
-const messageDiv = document.querySelector('#messageForUser')
+const deleteVaderButton = document.querySelector('#delete-vader-button');
+const messageDiv = document.querySelector('#messageForUsers');
+const deleteAllQuotesButton = document.querySelector('#delete-all-button');
 
-deleteVaderButton.addEventListener('click', _ => {
-  fetch('/quotes', {
-    method: 'delete',
-    headers: { 'Content-Type': 'application/json'},
-    body: JSON.stringify({
-        name: 'Darth Vader'
-    })
-  })
-  .then(res => {
-    if (res.ok) return res.json()
-  })
-  .then(data => {
-    if(data === 'No quote to delete'){
-        console.log('Worksz')
-        messageDiv.innerHTML = 'No Darth Vader quote to delete'
-    } else {
-        window.location.reload(true)
-    }
-  })
-});
-
-const deleteAllQuotesButton = document.querySelector('#delete-all-quotes-button');
-
-deleteAllQuotesButton.addEventListener('click', _ => {
-    fetch('/quotes', {
+// Event listener for "Delete Darth Vader's quote" button
+deleteVaderButton.addEventListener('click', () => {
+    fetch(`/quotes/darth-vader`, {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' }
     })
-    .then(response => response.json())
+    .then(res => {
+        if (res.ok) return res.json();
+    })
     .then(data => {
-        window.location.reload(true)
+        if (data === 'No quote to delete') {
+            messageDiv.innerHTML = 'No Darth Vader quote to delete';
+        } else {
+            messageDiv.innerHTML = data;
+            window.location.reload(true);
+        }
+    })
+    .catch(error => console.error('Error:', error));
+});
+
+// Event listener for "Delete All Quotes" button
+deleteAllQuotesButton.addEventListener('click', () => {
+    fetch(`/quotes`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        messageDiv.innerHTML = data;
+        window.location.reload(true);
     })
     .catch(error => console.error('Error:', error));
 });
