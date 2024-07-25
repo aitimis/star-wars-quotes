@@ -31,7 +31,7 @@ You can submit, view, update, and delete quotes from the database.
 
 4. Start the server:
     ```bash
-    npm start
+    npm run dev
     ```
 
 5. Open your browser and navigate to `http://localhost:3000` to see the app in action.
