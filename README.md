@@ -25,7 +25,8 @@ You can submit, view, update, and delete quotes from the database.
 
 3. Create a `.env` file in the root directory and add your MongoDB connection string:
     ```env
-    MONGODB_URI=your-mongodb-connection-string
+    DB_USERNAME='your_DB_username'
+    DB_PASSWORD='your_db_password'
     ```
 
 4. Start the server:
